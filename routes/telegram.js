@@ -317,14 +317,58 @@ router.get('/', (req, res) => {
 //     } else {
 //         res.status(200).json('No updates');
 //     }
-
-    
 // })
 
 router.post('/' + TOKEN, async (req, res) => {
     
-    const response = req.body;
-    res.status(200).json(response); 
+    const result = req.body;
+    if (result) {
+        const telegaDataNew = result.map((item) => {
+
+            let chatId;
+            if (item.message) {
+                chatId = item.message.chat.id;
+            }
+
+            if (item.edited_message) {
+                chatId = item.edited_message.chat.id;
+            }
+
+            return {
+                updateId: item.update_id,
+                data: item,
+                chatId
+            }
+        });
+
+        const sendedMessages = [];
+        const telegaDbFull = await TelegaDB.find();
+
+        for (const item of telegaDataNew) {
+            const rowDB = telegaDbFull.filter(row => row.updateId === item.updateId);
+            if (rowDB.length === 0) {
+                const telegaDB = new TelegaDB(item);
+                const savedData = await telegaDB.save();
+                const processedData = await processData(savedData);
+                // const usersFees = [["JohnSmiz",1385], ['asda', 1400]];
+                const messageToShow = resultMessage(processedData);
+                sendMessage(item.chatId, messageToShow);
+                sendedMessages.push(messageToShow);
+            } 
+        }
+    
+        try {
+            if (sendedMessages.length === 0) {
+                res.status(200).json('No new updates');  
+            } else {
+                res.status(200).json(sendedMessages);
+            }
+        } catch (err) {
+            res.status(502).json(err);
+        }
+    } else {
+        res.status(200).json('No updates');
+    }
 })
 
 //specific chat
