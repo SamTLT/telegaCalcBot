@@ -183,29 +183,33 @@ const summaryMsg = (a, b) => {
 const unixTimeToString = (unixTime) => {
 
     const checkZero = (data) => {
-        if(data.length == 1){
-            data = "0" + data;
+        if(data < 10){
+            data = data + 10;
         }
+        console.log(data);
         return data;
     }
 
     let today = new Date(unixTime * 1000);
-    let day = today.getDate() + "";
-    let month = (today.getMonth() + 1) + "";
-    let year = today.getFullYear() + "";
-    let hour = today.getHours() + "";
-    let minutes = today.getMinutes() + "";
-    let seconds = today.getSeconds() + "";
+    let day = today.getDate();
+    let month = (today.getMonth() + 1);
+    let year = today.getFullYear();
+    let hour = today.getHours();
+    let minutes = today.getMinutes();
+    let seconds = today.getSeconds();
 
     day = checkZero(day);
     month = checkZero(month);
     year = checkZero(year);
     hour = checkZero(hour);
-    mintues = checkZero(minutes);
+    minutes = checkZero(minutes);
     seconds = checkZero(seconds);
 
-    return hour + ":" + minutes + ":" + seconds + ' ' + day + '.' + month + '.' + year;
+    return `${hour}:${minutes}:${seconds} ${day}.${month}.${year}`;
 };
+
+console.log(unixTimeToString(11121));
+
 
 const resultMessage = (props) => {
 
