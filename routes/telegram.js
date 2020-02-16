@@ -321,6 +321,12 @@ router.get('/' + TOKEN, async (req, res) => {
     
 })
 
+router.post('/' + TOKEN, async (req, res) => {
+    
+    const response = req.data;
+        res.status(200).json(response); 
+})
+
 //specific chat
 // router.get('/:chatId', async (req, res) => {
 //     try {
