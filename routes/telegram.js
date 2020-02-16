@@ -6,7 +6,7 @@ const axios = require('axios');
 
 const API_URL = 'https://api.telegram.org/bot';
 const TOKEN = process.env.TELEGRAM_TOKEN;
-const LIMITERS = ['——', '---'];
+const LIMITERS = ['——', '---', '/limit'];
 
 const getMessage = (item) => {
     let message = item.data.message;
@@ -186,7 +186,6 @@ const unixTimeToString = (unixTime) => {
         if(data < 10){
             data = data + 10;
         }
-        console.log(data);
         return data;
     }
 
@@ -208,15 +207,12 @@ const unixTimeToString = (unixTime) => {
     return `${hour}:${minutes}:${seconds} ${day}.${month}.${year}`;
 };
 
-console.log(unixTimeToString(11121));
-
-
 const resultMessage = (props) => {
 
     const { usersFees, lastMessage, date, isLimiter } = props;
 
     if (isLimiter) {
-        return 'Ограничитель установлен. Оплаты будут считаться с этого момента';
+        return 'Готово. Оплаты будут считаться с этого момента';
     }
 
     if (usersFees.length > 2) {
