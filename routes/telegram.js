@@ -5,7 +5,7 @@ const TelegaDB = require('../models/TelegramDB');
 const axios = require('axios');
 
 const API_URL = 'https://api.telegram.org/bot';
-const TOKEN = '962736852:AAEeHhJUQncxubELzsmv3-GfMw8HRLHHYss';
+const TOKEN = process.env.TELEGRAM_TOKEN;
 const LIMITERS = ['——', '---'];
 
 const getMessage = (item) => {
@@ -263,6 +263,10 @@ const resultMessage = (props) => {
 router.get('/', (req, res) => {
     res.send('Home Page');
 });
+
+router.get('/' + TOKEN, async (req, res) => {
+    res.status(200).json('Get');
+})
 
 // update chats
 // router.get('/' + TOKEN, async (req, res) => {
