@@ -6,7 +6,8 @@ const axios = require('axios');
 
 const API_URL = 'https://api.telegram.org/bot';
 const TOKEN = process.env.TELEGRAM_TOKEN;
-const LIMITERS = ['——', '---', 'limit'];
+const LIMITERS = ['————','—————','——————','———————','————————','—————————', 
+            '----','-----', '------', '-------', '--------', '---------', '---------', '-----------', 'limit'];
 
 const getMessage = (item) => {
     let message = item.data.message;
@@ -26,6 +27,15 @@ const messageTextParse = (item) => {
         sum: numberParser(getMessage(item).text)
     }
 }
+
+const isInString = (text, arrOfSubstrings) => {
+    const filter = arrOfSubstrings.filter(item => item === text);
+    if (filter.length > 0) {
+        return true
+    }
+    return false
+}
+
 
 const processData = async (item) => {
     const dataDB = await TelegaDB.find({chatId: item.chatId });
@@ -113,8 +123,7 @@ const processData = async (item) => {
 
     const limiterItem = mergeOrigAndEdited.filter(item => {
         const message = item.data.message;
-        if (message && (message.text.includes(LIMITERS[0]) || 
-            message.text.includes(LIMITERS[1])) ) {
+        if (message && (isInString(message.text, LIMITERS)) ) {
                 return true;
             }
         return false;
