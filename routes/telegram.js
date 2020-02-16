@@ -323,7 +323,7 @@ router.get('/' + TOKEN, async (req, res) => {
 
 router.post('/' + TOKEN, async (req, res) => {
     
-    const response = req.data;
+    const response = res.data;
         res.status(200).json(response); 
 })
 
