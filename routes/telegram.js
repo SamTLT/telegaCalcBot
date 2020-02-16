@@ -325,7 +325,7 @@ router.post('/' + TOKEN, async (req, res) => {
     sendMessage(162884870, result);
 
     if (result) {
-        const telegaDataNew = result.map((item) => {
+        const telegaDataNew = [...result].map((item) => {
 
             let chatId;
             if (item.message) {
