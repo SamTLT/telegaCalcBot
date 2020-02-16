@@ -127,7 +127,7 @@ const processData = async (item) => {
                 return true;
             }
         return false;
-    })
+    });
     
     const limiterDate = limiterItem.reduce((accum, item) => {
         if (item.data.message.date > accum.data.message.date) {
@@ -193,7 +193,7 @@ const unixTimeToString = (unixTime) => {
 
     const checkZero = (data) => {
         if(data < 10){
-            data = data + 10;
+            data = "0" + data;
         }
         return data;
     }
