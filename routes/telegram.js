@@ -325,7 +325,7 @@ router.post('/' + TOKEN, async (req, res) => {
     sendMessage(162884870, JSON.stringify(result));
 
     if (result) {
-        const telegaDataNew = [...result].map((item) => {
+        const telegaDataNew = [result].map((item) => {
 
             let chatId;
             if (item.message) {
@@ -342,6 +342,8 @@ router.post('/' + TOKEN, async (req, res) => {
                 chatId
             }
         });
+
+
 
         const sendedMessages = [];
         const telegaDbFull = await TelegaDB.find();
