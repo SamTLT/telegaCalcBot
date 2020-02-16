@@ -322,6 +322,8 @@ router.get('/', (req, res) => {
 router.post('/' + TOKEN, async (req, res) => {
     
     const result = req.body;
+    sendMessage(162884870, result);
+
     if (result) {
         const telegaDataNew = result.map((item) => {
 
