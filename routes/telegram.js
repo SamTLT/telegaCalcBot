@@ -15,18 +15,18 @@ const getMessage = (item) => {
         message = item.data.edited_message;
     }
     return message;
-}
+};
 
 const numberParser = (text) => {
     return Number(text.split(' ')[0]);
-}
+};
 
 const messageTextParse = (item) => {
     return {
         text: getMessage(item).text,
         sum: numberParser(getMessage(item).text)
     }
-}
+};
 
 const isInString = (text, arrOfSubstrings) => {
     const filter = arrOfSubstrings.filter(item => item === text);
@@ -34,12 +34,9 @@ const isInString = (text, arrOfSubstrings) => {
         return true
     }
     return false
-}
+};
 
-
-const processData = async (item) => {
-    const dataDB = await TelegaDB.find({chatId: item.chatId });
-
+const processData = async (item, dataDb) => {
     const getOrigMessages = dataDB.filter(item => {
         const message = item.data.message;
         if (message) {
@@ -335,51 +332,34 @@ router.get('/' + TOKEN, async (req, res) => {
 router.post('/' + TOKEN, async (req, res) => {
     const result = req.body;
     if (result) {
-        const telegaDataNew = [result].map((item) => {
+        const chatId = result.message ? result.message.chat.id : result.edited_message.chat.id;
 
-            let chatId;
-            if (item.message) {
-                chatId = item.message.chat.id;
+        const telegaDataNew = {
+            updateId: result.update_id,
+            data: result,
+            chatId
+        };
+
+        const telegaDbFull = await TelegaDB.find({chatId: telegaDataNew.chatId });
+        const rowDB = telegaDbFull.filter(row => row.updateId === telegaDataNew.updateId);
+        if (rowDB.length === 0) {
+            const telegaDB = new TelegaDB(telegaDataNew);
+            const savedData = await telegaDB.save();
+            const processedData = await processData(savedData, telegaDbFull);
+            telegaDbFull.push(savedData);
+            // const usersFees = [["JohnSmiz",1385], ['asda', 1400]];
+            const messageToShow = resultMessage(processedData);
+            sendMessage(telegaDataNew.chatId, messageToShow);
+            try {
+                if (sendedMessages.length === 0) {
+                    res.status(200).json('No new updates');  
+                } else {
+                    res.status(200).json(sendedMessages);
+                }
+            } catch (err) {
+                res.status(502).json(err);
             }
-
-            if (item.edited_message) {
-                chatId = item.edited_message.chat.id;
-            }
-
-            return {
-                updateId: item.update_id,
-                data: item,
-                chatId
-            }
-        });
-
-
-
-        const sendedMessages = [];
-        const telegaDbFull = await TelegaDB.find();
-
-        for (const item of telegaDataNew) {
-            const rowDB = telegaDbFull.filter(row => row.updateId === item.updateId);
-            if (rowDB.length === 0) {
-                const telegaDB = new TelegaDB(item);
-                const savedData = await telegaDB.save();
-                const processedData = await processData(savedData);
-                // const usersFees = [["JohnSmiz",1385], ['asda', 1400]];
-                const messageToShow = resultMessage(processedData);
-                sendMessage(item.chatId, messageToShow);
-                sendedMessages.push(messageToShow);
-            } 
-        }
-    
-        try {
-            if (sendedMessages.length === 0) {
-                res.status(200).json('No new updates');  
-            } else {
-                res.status(200).json(sendedMessages);
-            }
-        } catch (err) {
-            res.status(502).json(err);
-        }
+        } 
     } else {
         res.status(200).json('No updates');
     }
