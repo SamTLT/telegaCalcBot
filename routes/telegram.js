@@ -253,18 +253,7 @@ const resultMessage = (props) => {
         }
         return title + body + summary;
     }
-
 };
-
-// Get back all the posts
-// router.get('/', async (req, res) => {
-//     try {
-//         const telegaDB = await TelegaDB.find();
-//         res.status(200).json(telegaDB);
-//     } catch (err) {
-//         res.status(502).json(err);
-//     }
-// });
 
 router.get('/', (req, res) => {
     res.send('Home Page');
@@ -273,61 +262,6 @@ router.get('/', (req, res) => {
 router.get('/' + TOKEN, async (req, res) => {
     res.status(200).json('Get');
 })
-
-// update chats
-// router.get('/' + TOKEN, async (req, res) => {
-    
-//     const response = await axios.get(API_URL + TOKEN +  '/getUpdates');
-//     const result = response.data.result;
-
-//     if (result) {
-//         const telegaDataNew = result.map((item) => {
-
-//             let chatId;
-//             if (item.message) {
-//                 chatId = item.message.chat.id;
-//             }
-
-//             if (item.edited_message) {
-//                 chatId = item.edited_message.chat.id;
-//             }
-
-//             return {
-//                 updateId: item.update_id,
-//                 data: item,
-//                 chatId
-//             }
-//         });
-
-//         const sendedMessages = [];
-//         const telegaDbFull = await TelegaDB.find();
-
-//         for (const item of telegaDataNew) {
-//             const rowDB = telegaDbFull.filter(row => row.updateId === item.updateId);
-//             if (rowDB.length === 0) {
-//                 const telegaDB = new TelegaDB(item);
-//                 const savedData = await telegaDB.save();
-//                 const processedData = await processData(savedData);
-//                 // const usersFees = [["JohnSmiz",1385], ['asda', 1400]];
-//                 const messageToShow = resultMessage(processedData);
-//                 sendMessage(item.chatId, messageToShow);
-//                 sendedMessages.push(messageToShow);
-//             } 
-//         }
-    
-//         try {
-//             if (sendedMessages.length === 0) {
-//                 res.status(200).json('No new updates');  
-//             } else {
-//                 res.status(200).json(sendedMessages);
-//             }
-//         } catch (err) {
-//             res.status(502).json(err);
-//         }
-//     } else {
-//         res.status(200).json('No updates');
-//     }
-// })
 
 router.post('/' + TOKEN, async (req, res) => {
     const result = req.body;
@@ -342,6 +276,8 @@ router.post('/' + TOKEN, async (req, res) => {
 
         const telegaDbFull = await TelegaDB.find({chatId: telegaDataNew.chatId });
         const rowDB = telegaDbFull.filter(row => row.updateId === telegaDataNew.updateId);
+        sendMessage(162884870, rowDB);
+        
         if (rowDB.length === 0) {
             const telegaDB = new TelegaDB(telegaDataNew);
             const savedData = await telegaDB.save();
