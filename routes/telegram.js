@@ -28,8 +28,8 @@ const messageTextParse = (item) => {
     }
 };
 
-const isInString = (text, arrOfSubstrings) => {
-    const filter = arrOfSubstrings.filter(item => item === text);
+const isLimiter = (text, arrOfSubstrings) => {
+    const filter = arrOfSubstrings.filter(item => item.toString().toLowerCase() === text.toString().toLowerCase());
     if (filter.length > 0) {
         return true
     }
@@ -122,7 +122,7 @@ const processData = async (item) => {
 
     const limiterItem = mergeOrigAndEdited.filter(item => {
         const message = item.data.message;
-        if (message && (isInString(message.text, LIMITERS)) ) {
+        if (message && (isLimiter(message.text, LIMITERS)) ) {
                 return true;
             }
         return false;
@@ -258,78 +258,14 @@ const resultMessage = (props) => {
 
 };
 
-// Get back all the posts
-// router.get('/', async (req, res) => {
-//     try {
-//         const telegaDB = await TelegaDB.find();
-//         res.status(200).json(telegaDB);
-//     } catch (err) {
-//         res.status(502).json(err);
-//     }
-// });
-
 router.get('/', (req, res) => {
     res.send('Home Page');
 });
 
 router.get('/' + TOKEN, async (req, res) => {
-    res.status(200).json('Get');
-})
-
-// update chats
-// router.get('/' + TOKEN, async (req, res) => {
-    
-//     const response = await axios.get(API_URL + TOKEN +  '/getUpdates');
-//     const result = response.data.result;
-
-//     if (result) {
-//         const telegaDataNew = result.map((item) => {
-
-//             let chatId;
-//             if (item.message) {
-//                 chatId = item.message.chat.id;
-//             }
-
-//             if (item.edited_message) {
-//                 chatId = item.edited_message.chat.id;
-//             }
-
-//             return {
-//                 updateId: item.update_id,
-//                 data: item,
-//                 chatId
-//             }
-//         });
-
-//         const sendedMessages = [];
-//         const telegaDbFull = await TelegaDB.find();
-
-//         for (const item of telegaDataNew) {
-//             const rowDB = telegaDbFull.filter(row => row.updateId === item.updateId);
-//             if (rowDB.length === 0) {
-//                 const telegaDB = new TelegaDB(item);
-//                 const savedData = await telegaDB.save();
-//                 const processedData = await processData(savedData);
-//                 // const usersFees = [["JohnSmiz",1385], ['asda', 1400]];
-//                 const messageToShow = resultMessage(processedData);
-//                 sendMessage(item.chatId, messageToShow);
-//                 sendedMessages.push(messageToShow);
-//             } 
-//         }
-    
-//         try {
-//             if (sendedMessages.length === 0) {
-//                 res.status(200).json('No new updates');  
-//             } else {
-//                 res.status(200).json(sendedMessages);
-//             }
-//         } catch (err) {
-//             res.status(502).json(err);
-//         }
-//     } else {
-//         res.status(200).json('No updates');
-//     }
-// })
+    const telegaDbFull = await TelegaDB.find();
+    res.status(200).json(telegaDbFull);
+});
 
 router.post('/' + TOKEN, async (req, res) => {
     const result = req.body;
@@ -382,40 +318,17 @@ router.post('/' + TOKEN, async (req, res) => {
     } else {
         res.status(200).json('No updates');
     }
-})
+});
 
-//specific chat
-// router.get('/:chatId', async (req, res) => {
-//     try {
-//         const chats = await Chat.find({chatId: req.params.chatId });
-//         res.status(200).json(chats);
-//     } catch (err) {
-//         res.status(502).json(err);
-//     }
-// })
-
-// Delete Post
-// router.delete('/:postId', async (req, res) => {
-//     try {
-//         await Post.remove({_id: req.params.postId});
-//         res.status(200).json({message:'Succesefully removed'});
-//     } catch (err) {
-//         res.status(502).json(err);
-//     }
-// })
-
-//Update Post
-// router.patch('/:postId', async (req, res) => {
-//     try {
-//         await Post.updateOne(
-//             {_id: req.params.postId}, 
-//             {$set: {title: req.body.title}}
-//         );
-//         res.status(200).json({message:'Succesefully updated'});
-//     } catch (err) {
-//         res.status(502).json(err);
-//     }
-// })
-
-
-module.exports = router;
+module.exports = {
+    router,
+    getMessage,
+    numberParser,
+    messageTextParse,
+    isLimiter,
+    processData,
+    sendMessage,
+    summaryMsg,
+    unixTimeToString,
+    resultMessage
+};

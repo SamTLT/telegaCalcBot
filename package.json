@@ -5,7 +5,8 @@
   "main": "test.js",
   "scripts": {
     "start": "node app.js",
-    "startus": "nodemon app.js"
+    "startus": "nodemon app.js",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -17,5 +18,8 @@
     "express": "^4.17.1",
     "mongoose": "^5.8.11",
     "nodemon": "^2.0.2"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0"
   }
 }

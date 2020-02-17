@@ -10,8 +10,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 //Import Routes
-const telegramRoutes = require('./routes/telegram');
-app.use('/', telegramRoutes);
+const { router } = require('./routes/telegram');
+app.use('/', router);
 
 //Routes
 // app.get('/', (req, res) => {
