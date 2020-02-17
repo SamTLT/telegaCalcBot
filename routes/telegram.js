@@ -274,10 +274,12 @@ router.post('/' + TOKEN, async (req, res) => {
             chatId
         };
 
+        sendMessage(162884870, telegaDataNew);
+
         const telegaDbFull = await TelegaDB.find({chatId: telegaDataNew.chatId });
         const rowDB = telegaDbFull.filter(row => row.updateId === telegaDataNew.updateId);
         sendMessage(162884870, rowDB);
-        
+
         if (rowDB.length === 0) {
             const telegaDB = new TelegaDB(telegaDataNew);
             const savedData = await telegaDB.save();
