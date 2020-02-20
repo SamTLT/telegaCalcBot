@@ -216,7 +216,7 @@ const sendMessage = async (chatId, text) => {
 
 const summaryMsg = (a, b) => {
   return `<b>${a[0]}</b> должен(а): 
-${b[1]} - ${a[1]} = <b>${b[1] - a[1]}</b> руб.`;
+${b[1]} - ${a[1]} = <b>${b[1] - a[1]} руб.</b>`;
 };
 
 const unixTimeToString = unixTime => {
@@ -308,7 +308,7 @@ router.get("/", (req, res) => {
   };
 
   // sendMessage(162884870, resultMessage(resultChat));
-  sendMessage(162884870, resultMessage(resultGroup));
+  // sendMessage(162884870, resultMessage(resultGroup));
   res.send("Home Page");
 });
 
