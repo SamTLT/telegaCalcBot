@@ -1,14 +1,5 @@
 const funcs = require("./telegram.js");
-
-// getMessage,
-// numberParser,
-// messageTextParse,
-// isLimiter,
-// processData,
-// sendMessage,
-// summaryMsg,
-// unixTimeToString,
-// resultMessage
+const processData = require("../utilites/process-data");
 
 const dbItemMessage = {
   _id: "5e49519b7d0d5f0017b0deac",
@@ -60,7 +51,7 @@ const messageAnswer = {
 };
 
 test("get (message) from obj", () => {
-  expect(funcs.getMessage(dbItemMessage)).toEqual(messageAnswer);
+  expect(processData.getMessage(dbItemMessage)).toEqual(messageAnswer);
 });
 
 const dbItemEditedMessage = {
@@ -113,49 +104,51 @@ const editedMessageAnswer = {
 };
 
 test("get (edit_message) from obj", () => {
-  expect(funcs.getMessage(dbItemEditedMessage)).toEqual(editedMessageAnswer);
+  expect(processData.getMessage(dbItemEditedMessage)).toEqual(
+    editedMessageAnswer
+  );
 });
 
 test('message "2 5ka" => 2', () => {
-  expect(funcs.numberParser("2 5ka")).toEqual(2);
+  expect(processData.numberParser("2 5ka")).toEqual(2);
 });
 
 test('message "23123" => 23123', () => {
-  expect(funcs.numberParser("23123")).toEqual(23123);
+  expect(processData.numberParser("23123")).toEqual(23123);
 });
 
 test('message "asdasdas 123" => NaN', () => {
-  expect(funcs.numberParser("asdasdas 123")).toBeNaN();
+  expect(processData.numberParser("asdasdas 123")).toBeNaN();
 });
 
 test("get item text and sum (message)", () => {
-  expect(funcs.messageTextParse(dbItemMessage)).toEqual({
+  expect(processData.messageTextParse(dbItemMessage)).toEqual({
     sum: NaN,
     text: "/limit"
   });
 });
 
 test("get item text and sum (edit_message)", () => {
-  expect(funcs.messageTextParse(dbItemEditedMessage)).toEqual({
+  expect(processData.messageTextParse(dbItemEditedMessage)).toEqual({
     sum: 231,
     text: "231 bill"
   });
 });
 
 test("is aaaaaaabbbbb equals aaaa", () => {
-  expect(funcs.isLimiter("aaaaaaabbbbb", ["aaaa"])).toEqual(false);
+  expect(processData.isLimiter("aaaaaaabbbbb", ["aaaa"])).toEqual(false);
 });
 
 test("is aaaa equals aaaa", () => {
-  expect(funcs.isLimiter("aaaa", ["aaaa"])).toEqual(true);
+  expect(processData.isLimiter("aaaa", ["aaaa"])).toEqual(true);
 });
 
 test('is 21 equals "21"', () => {
-  expect(funcs.isLimiter(21, ["21"])).toEqual(true);
+  expect(processData.isLimiter(21, ["21"])).toEqual(true);
 });
 
 test("is HeLlO equals hello", () => {
-  expect(funcs.isLimiter("HeLlO", ["hello"])).toEqual(true);
+  expect(processData.isLimiter("HeLlO", ["hello"])).toEqual(true);
 });
 
 const dbChat = [
@@ -1034,11 +1027,78 @@ const itemChatWithBot = {
 const resultChat = {
   usersFees: [["JohnSmiz", 181]],
   lastMessage: { message: { text: "12", sum: 12 }, username: "JohnSmiz" },
-  date: "21:49:12 17.02.2020"
+  date: "21:49 17.02.2020"
 };
 
+const LIMITERS = [
+  "————",
+  "—————",
+  "——————",
+  "———————",
+  "————————",
+  "—————————",
+  "----",
+  "-----",
+  "------",
+  "-------",
+  "--------",
+  "---------",
+  "---------",
+  "-----------",
+  "/limit"
+];
+
 test("New message by Seamus chat with bot (processData)", () => {
-  expect(funcs.processData(itemChatWithBot, dbChat)).toEqual(resultChat);
+  expect(processData.processData(itemChatWithBot, dbChat, LIMITERS)).toEqual(
+    resultChat
+  );
+});
+
+const itemChatWithBotLimiter = {
+  _id: "5e4ec61cb97d4c0017d69061",
+  updateId: 812742859,
+  data: {
+    update_id: 812742859,
+    message: {
+      message_id: 408,
+      from: {
+        id: 162884870,
+        is_bot: false,
+        first_name: "Seamus",
+        username: "JohnSmiz",
+        language_code: "ru"
+      },
+      chat: {
+        id: 162884870,
+        first_name: "Seamus",
+        username: "JohnSmiz",
+        type: "private"
+      },
+      date: 1582220828,
+      text: "/limit"
+    }
+  },
+  chatId: 162884870,
+  __v: 0
+};
+
+const resultWithoutLimiters = {
+  error:
+    "Ограничитель не установлен. Для установки ограничителя введите команду /limit"
+};
+
+test("Set limiter by Seamus chat with bot (processData)", () => {
+  expect(
+    processData.processData(itemChatWithBotLimiter, dbChat, LIMITERS)
+  ).toEqual(resultWithoutLimiters);
+});
+
+test("New message by Seamus chat with bot (processData) without limiters", () => {
+  expect(
+    processData.processData(itemChatWithBot, dbChat, [
+      "u94fnsefj98sejfsjef8sjfs8ejfs"
+    ])
+  ).toEqual(resultWithoutLimiters);
 });
 
 const dbGroupChat = [
@@ -1371,17 +1431,64 @@ const resultGroup = {
     message: { text: "3000 тинек", sum: 3000 },
     username: "JohnSmiz"
   },
-  date: "01:52:34 20.02.2020"
+  date: "01:52 20.02.2020"
 };
 
+test("Set limiter by Seamus group chat (processData)", () => {
+  expect(
+    processData.processData(itemChatWithBotLimiter, dbGroupChat, LIMITERS)
+  ).toEqual(resultWithoutLimiters);
+});
+
 test("New message by Seamus in group chat (processData)", () => {
-  expect(funcs.processData(itemGroup, dbGroupChat)).toEqual(resultGroup);
+  expect(processData.processData(itemGroup, dbGroupChat, LIMITERS)).toEqual(
+    resultGroup
+  );
 });
 
-test("New message by Seamus in group chat (resultMessage)", () => {
-  expect(funcs.resultMessage(resultChat)).toEqual(resultGroup);
+test("New message by Seamus in group chat (processData) without limiters", () => {
+  expect(
+    processData.processData(itemGroup, dbGroupChat, [
+      "asiodhaosiudhaisuogdioaushdioash"
+    ])
+  ).toEqual(resultWithoutLimiters);
 });
 
-// test("New message by Seamus in group chat (resultMessage)", () => {
-//   expect(funcs.resultMessage(resultGroup)).toEqual(resultGroup);
-// });
+test("Result message set limiter", () => {
+  expect(funcs.resultMessage(resultWithoutLimiters)).toEqual(
+    resultWithoutLimiters.error
+  );
+});
+
+const resultMessageBot =
+  "Начало отсчета: 21:49 17.02.2020\n<b>JohnSmiz оплатил(а) 12 руб.</b>\n\nРасходы:\nJohnSmiz: 181 руб.\n";
+
+test("Result message in bot chat", () => {
+  expect(funcs.resultMessage(resultChat)).toBe(resultMessageBot);
+});
+
+test("Result message in bot chat (without limmiter)", () => {
+  expect(funcs.resultMessage(resultWithoutLimiters)).toBe(
+    resultWithoutLimiters.error
+  );
+});
+
+const resultMessageGroup = `Начало отсчета: 01:52 20.02.2020
+<b>JohnSmiz оплатил(а) 3000 руб.</b>
+
+Расходы:
+JohnSmiz: 6172 руб.
+TatianaKuv: 1 руб.
+
+<b>TatianaKuv</b> должен(а): 
+6172 - 1 = <b>6171 руб.</b>`;
+
+test("Result message in group chat", () => {
+  expect(funcs.resultMessage(resultGroup)).toBe(resultMessageGroup);
+});
+
+test("Result message in group chat (without limiter)", () => {
+  expect(funcs.resultMessage(resultWithoutLimiters)).toBe(
+    resultWithoutLimiters.error
+  );
+});
