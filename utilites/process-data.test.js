@@ -1,4 +1,5 @@
 const processData = require("../utilites/process-data");
+const { LIMITERS } = require("../routes/telegram");
 
 const dbItemMessage = {
   _id: "5e49519b7d0d5f0017b0deac",
@@ -1028,24 +1029,6 @@ const resultChat = {
   lastMessage: { message: { text: "12", sum: 12 }, username: "JohnSmiz" },
   date: "21:49 17.02.2020"
 };
-
-const LIMITERS = [
-  "————",
-  "—————",
-  "——————",
-  "———————",
-  "————————",
-  "—————————",
-  "----",
-  "-----",
-  "------",
-  "-------",
-  "--------",
-  "---------",
-  "---------",
-  "-----------",
-  "/limit"
-];
 
 test("New message by Seamus chat with bot (processData)", () => {
   expect(processData.processData(itemChatWithBot, dbChat, LIMITERS)).toEqual(

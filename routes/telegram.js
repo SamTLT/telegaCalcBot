@@ -136,12 +136,9 @@ router.post("/" + TOKEN, async (req, res) => {
   const result = req.body;
   if (result) {
     const telegaDataNew = getTelegaDataNew(result);
-    const telegaDbFull = await TelegaDB.find();
-    const rowDB = telegaDbFull.filter(
-      row => row.updateId === telegaDataNew.updateId
-    );
+    const rowsDB = await TelegaDB.find({ updateId: telegaDataNew.updateId });
 
-    if (rowDB.length === 0) {
+    if (rowsDB.length === 0) {
       const telegaDB = new TelegaDB(telegaDataNew);
       const savedData = await telegaDB.save();
       const dataDB = await TelegaDB.find({ chatId: telegaDataNew.chatId });
@@ -161,5 +158,6 @@ router.post("/" + TOKEN, async (req, res) => {
 
 module.exports = {
   router,
+  LIMITERS,
   resultMessage
 };
