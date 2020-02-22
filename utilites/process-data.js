@@ -199,6 +199,7 @@ const getUsersFees = data =>
   });
 
 const processData = (item, dataDB, limiters) => {
+  // checking for limiter
   if (getLimitersArr([item], limiters).length > 0) {
     return processDataReturnedObj({ isLimiter: true });
   }
