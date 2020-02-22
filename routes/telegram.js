@@ -126,10 +126,10 @@ router.get("/", (req, res) => {
 router.get("/" + TOKEN, async (req, res) => {
   // const telegaDbFull = await TelegaDB.find();
   // const telegaDbFull = await TelegaDB.find({ chatId: -303247171 });
-  const telegaDbFull = await TelegaDB.find({ chatId: 162884870 });
+  // const telegaDbFull = await TelegaDB.find({ chatId: 162884870 });
 
-  res.status(200).json(telegaDbFull);
-  // res.status(200).json("placeholder");
+  // res.status(200).json(telegaDbFull);
+  res.status(200).json("placeholder");
 });
 
 router.post("/" + TOKEN, async (req, res) => {
