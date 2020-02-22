@@ -1703,3 +1703,15 @@ test("getLastEditedMessages", () => {
     filteredEditedMessages
   );
 });
+
+test("Unixtime 1582152820 to string '01:53 20.02.2020'", () => {
+  expect(processData.unixTimeToString(1582152820)).toEqual("01:53 20.02.2020");
+});
+
+test("Unixtime 1582376191 to string '15:56 22.02.2020'", () => {
+  expect(processData.unixTimeToString(1582376191)).toEqual("15:56 22.02.2020");
+});
+
+test("Unixtime 1582152820 to string 03:00 01.01.1970", () => {
+  expect(processData.unixTimeToString(0)).toEqual("03:00 01.01.1970");
+});

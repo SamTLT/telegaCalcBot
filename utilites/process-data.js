@@ -1,3 +1,5 @@
+const Moment = require("moment-timezone");
+
 const isLimiter = (text, arrOfSubstrings) => {
   const filter = arrOfSubstrings.filter(
     item => item.toString().toLowerCase() === text.toString().toLowerCase()
@@ -13,27 +15,9 @@ const numberParser = text => {
 };
 
 const unixTimeToString = unixTime => {
-  const checkZero = data => {
-    if (data < 10) {
-      data = "0" + data;
-    }
-    return data;
-  };
-
-  let today = new Date(unixTime * 1000);
-  let day = today.getDate();
-  let month = today.getMonth() + 1;
-  let year = today.getFullYear();
-  let hour = today.getHours();
-  let minutes = today.getMinutes();
-
-  day = checkZero(day);
-  month = checkZero(month);
-  year = checkZero(year);
-  hour = checkZero(hour);
-  minutes = checkZero(minutes);
-
-  return `${hour}:${minutes} ${day}.${month}.${year}`;
+  return Moment(unixTime * 1000)
+    .tz("Europe/Moscow")
+    .format("HH:mm DD.MM.YYYY");
 };
 
 const getMessage = item => {
