@@ -1087,10 +1087,14 @@ const resultWithoutLimiters = {
     "Ограничитель не установлен. Для установки ограничителя введите команду /limit"
 };
 
+const resultIfItIsLimiter = {
+  isLimiter: true
+};
+
 test("Set limiter by Seamus chat with bot (processData)", () => {
   expect(
     processData.processData(itemChatWithBotLimiter, dbChat, LIMITERS)
-  ).toEqual(resultWithoutLimiters);
+  ).toEqual(resultIfItIsLimiter);
 });
 
 test("New message by Seamus chat with bot (processData) without limiters", () => {
@@ -1437,7 +1441,7 @@ const resultGroup = {
 test("Set limiter by Seamus group chat (processData)", () => {
   expect(
     processData.processData(itemChatWithBotLimiter, dbGroupChat, LIMITERS)
-  ).toEqual(resultWithoutLimiters);
+  ).toEqual(resultIfItIsLimiter);
 });
 
 test("New message by Seamus in group chat (processData)", () => {

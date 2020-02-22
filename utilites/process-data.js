@@ -152,15 +152,15 @@ const getDataAfterDate = (data, limiterDate) =>
   data.filter(item => item.data.message.date > limiterDate);
 
 const processDataReturnedObj = (item, limiterDate, usersFees) => {
+  if (item && item.isLimiter === true) {
+    return item;
+  }
+
   if (!limiterDate) {
     return {
       error:
         "Ограничитель не установлен. Для установки ограничителя введите команду /limit"
     };
-  }
-
-  if (item.isLimiter === true) {
-    return item;
   }
 
   return {
