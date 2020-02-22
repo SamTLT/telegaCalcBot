@@ -82,6 +82,23 @@ ${
   }
 };
 
+const getTelegaDataNew = item => {
+  let chatId;
+  if (item.message) {
+    chatId = item.message.chat.id;
+  }
+
+  if (item.edited_message) {
+    chatId = item.edited_message.chat.id;
+  }
+
+  return {
+    updateId: item.update_id,
+    data: item,
+    chatId
+  };
+};
+
 router.get("/", (req, res) => {
   const resultChat = {
     usersFees: [["JohnSmiz", 181]],
@@ -107,54 +124,34 @@ router.get("/", (req, res) => {
 });
 
 router.get("/" + TOKEN, async (req, res) => {
-  const telegaDbFull = await TelegaDB.find({ chatId: -303247171 });
-  res.status(200).json(telegaDbFull);
+  // const telegaDbFull = await TelegaDB.find({ chatId: -303247171 });
+  // const telegaDbFull = await TelegaDB.deleteMany({ chatId: 162884870 });
+
+  // res.status(200).json(telegaDbFull);
+  res.status(200).json("plcaeholder");
 });
 
 router.post("/" + TOKEN, async (req, res) => {
   const result = req.body;
   if (result) {
-    const telegaDataNew = [result].map(item => {
-      let chatId;
-      if (item.message) {
-        chatId = item.message.chat.id;
-      }
-
-      if (item.edited_message) {
-        chatId = item.edited_message.chat.id;
-      }
-
-      return {
-        updateId: item.update_id,
-        data: item,
-        chatId
-      };
-    });
-
-    const sendedMessages = [];
+    const telegaDataNew = getTelegaDataNew(result);
     const telegaDbFull = await TelegaDB.find();
+    const rowDB = telegaDbFull.filter(
+      row => row.updateId === telegaDataNew.updateId
+    );
 
-    for (const item of telegaDataNew) {
-      const rowDB = telegaDbFull.filter(row => row.updateId === item.updateId);
-      if (rowDB.length === 0) {
-        const telegaDB = new TelegaDB(item);
-        const savedData = await telegaDB.save();
-        const dataDB = await TelegaDB.find({ chatId: item.chatId });
-        const processedData = processData(savedData, dataDB, LIMITERS);
-        const messageToShow = resultMessage(processedData);
-        sendMessage(item.chatId, messageToShow);
-        sendedMessages.push(messageToShow);
+    if (rowDB.length === 0) {
+      const telegaDB = new TelegaDB(telegaDataNew);
+      const savedData = await telegaDB.save();
+      const dataDB = await TelegaDB.find({ chatId: telegaDataNew.chatId });
+      const processedData = processData(savedData, dataDB, LIMITERS);
+      const messageToShow = resultMessage(processedData);
+      sendMessage(telegaDataNew.chatId, messageToShow);
+      try {
+        res.status(200).json("Successfully updated");
+      } catch (err) {
+        res.status(502).json(err);
       }
-    }
-
-    try {
-      if (sendedMessages.length === 0) {
-        res.status(200).json("No new updates");
-      } else {
-        res.status(200).json(sendedMessages);
-      }
-    } catch (err) {
-      res.status(502).json(err);
     }
   } else {
     res.status(200).json("No updates");
