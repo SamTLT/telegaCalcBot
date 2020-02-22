@@ -55,7 +55,7 @@ const getMessagesFromDb = (dataDB, type) =>
   dataDB.filter(item => {
     const message = item.data[type];
     if (message) {
-      // kill reposts
+      // filter out reposts
       if (!message.forward_date) {
         return true;
       }
@@ -63,7 +63,7 @@ const getMessagesFromDb = (dataDB, type) =>
     return false;
   });
 
-const filterEditedMessages = editedMessages =>
+const getLastEditedMessages = editedMessages =>
   editedMessages.reduce((accum, item) => {
     if (accum.length === 0) {
       accum.push(item);
@@ -206,7 +206,7 @@ const processData = (item, dataDB, limiters) => {
 
   const origMessages = getMessagesFromDb(dataDB, "message");
   const editedMessages = getMessagesFromDb(dataDB, "edited_message");
-  const filteredEditedMessages = filterEditedMessages(editedMessages);
+  const filteredEditedMessages = getLastEditedMessages(editedMessages);
 
   const mergeOrigAndEdited = mergeMessages(
     origMessages,
@@ -235,5 +235,6 @@ module.exports = {
   messageTextParse,
   processData,
   numberParser,
-  getMessagesFromDb
+  getMessagesFromDb,
+  getLastEditedMessages
 };

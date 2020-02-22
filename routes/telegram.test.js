@@ -1496,3 +1496,601 @@ test("Result message in group chat (without limiter)", () => {
     resultWithoutLimiters.error
   );
 });
+
+const editedMessages = [
+  {
+    _id: "5e510354bd3abe0017b1a8c4",
+    updateId: 812742917,
+    data: {
+      update_id: 812742917,
+      edited_message: {
+        message_id: 542,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582367564,
+        edit_date: 1582367572,
+        text: "123 hjd"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e51035abd3abe0017b1a8c5",
+    updateId: 812742918,
+    data: {
+      update_id: 812742918,
+      edited_message: {
+        message_id: 542,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582367564,
+        edit_date: 1582367578,
+        text: "123 hjdjjsk"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e510506bd3abe0017b1a8c6",
+    updateId: 812742919,
+    data: {
+      update_id: 812742919,
+      edited_message: {
+        message_id: 544,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582367566,
+        edit_date: 1582368006,
+        text: "672 jdkkkd"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e510510bd3abe0017b1a8c8",
+    updateId: 812742921,
+    data: {
+      update_id: 812742921,
+      edited_message: {
+        message_id: 549,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582368010,
+        edit_date: 1582368015,
+        text: "Jjdjjdjjejdjdj"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e510514bd3abe0017b1a8c9",
+    updateId: 812742922,
+    data: {
+      update_id: 812742922,
+      edited_message: {
+        message_id: 549,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582368010,
+        edit_date: 1582368019,
+        text: "Jjdjjdjjejdjdjhshhshd"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e51051dbd3abe0017b1a8ca",
+    updateId: 812742923,
+    data: {
+      update_id: 812742923,
+      edited_message: {
+        message_id: 549,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582368010,
+        edit_date: 1582368028,
+        text: "212"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  }
+];
+
+const filteredEditedMessages = [
+  {
+    _id: "5e51035abd3abe0017b1a8c5",
+    updateId: 812742918,
+    data: {
+      update_id: 812742918,
+      edited_message: {
+        message_id: 542,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582367564,
+        edit_date: 1582367578,
+        text: "123 hjdjjsk"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e510506bd3abe0017b1a8c6",
+    updateId: 812742919,
+    data: {
+      update_id: 812742919,
+      edited_message: {
+        message_id: 544,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582367566,
+        edit_date: 1582368006,
+        text: "672 jdkkkd"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e51051dbd3abe0017b1a8ca",
+    updateId: 812742923,
+    data: {
+      update_id: 812742923,
+      edited_message: {
+        message_id: 549,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582368010,
+        edit_date: 1582368028,
+        text: "212"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  }
+];
+
+test("getLastEditedMessages", () => {
+  expect(processData.getLastEditedMessages(editedMessages)).toEqual(
+    filteredEditedMessages
+  );
+});
+
+dataDB = [
+  {
+    _id: "5e510342bd3abe0017b1a8bf",
+    updateId: 812742912,
+    data: {
+      update_id: 812742912,
+      message: {
+        message_id: 536,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582367554,
+        text: "Kdkr"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e510345bd3abe0017b1a8c0",
+    updateId: 812742913,
+    data: {
+      update_id: 812742913,
+      message: {
+        message_id: 538,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582367557,
+        text: "/limit",
+        entities: [{ offset: 0, length: 6, type: "bot_command" }]
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e510348bd3abe0017b1a8c1",
+    updateId: 812742914,
+    data: {
+      update_id: 812742914,
+      message: {
+        message_id: 540,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582367560,
+        text: "Kdkdkd"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e51034cbd3abe0017b1a8c2",
+    updateId: 812742915,
+    data: {
+      update_id: 812742915,
+      message: {
+        message_id: 542,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582367564,
+        text: "123"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e51034fbd3abe0017b1a8c3",
+    updateId: 812742916,
+    data: {
+      update_id: 812742916,
+      message: {
+        message_id: 544,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582367566,
+        text: "672"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e510354bd3abe0017b1a8c4",
+    updateId: 812742917,
+    data: {
+      update_id: 812742917,
+      edited_message: {
+        message_id: 542,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582367564,
+        edit_date: 1582367572,
+        text: "123 hjd"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e51035abd3abe0017b1a8c5",
+    updateId: 812742918,
+    data: {
+      update_id: 812742918,
+      edited_message: {
+        message_id: 542,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582367564,
+        edit_date: 1582367578,
+        text: "123 hjdjjsk"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e510506bd3abe0017b1a8c6",
+    updateId: 812742919,
+    data: {
+      update_id: 812742919,
+      edited_message: {
+        message_id: 544,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582367566,
+        edit_date: 1582368006,
+        text: "672 jdkkkd"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e51050abd3abe0017b1a8c7",
+    updateId: 812742920,
+    data: {
+      update_id: 812742920,
+      message: {
+        message_id: 549,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582368010,
+        text: "Jjdjjd"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e510510bd3abe0017b1a8c8",
+    updateId: 812742921,
+    data: {
+      update_id: 812742921,
+      edited_message: {
+        message_id: 549,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582368010,
+        edit_date: 1582368015,
+        text: "Jjdjjdjjejdjdj"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e510514bd3abe0017b1a8c9",
+    updateId: 812742922,
+    data: {
+      update_id: 812742922,
+      edited_message: {
+        message_id: 549,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582368010,
+        edit_date: 1582368019,
+        text: "Jjdjjdjjejdjdjhshhshd"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  },
+  {
+    _id: "5e51051dbd3abe0017b1a8ca",
+    updateId: 812742923,
+    data: {
+      update_id: 812742923,
+      edited_message: {
+        message_id: 549,
+        from: {
+          id: 162884870,
+          is_bot: false,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          language_code: "ru"
+        },
+        chat: {
+          id: 162884870,
+          first_name: "Seamus",
+          username: "JohnSmiz",
+          type: "private"
+        },
+        date: 1582368010,
+        edit_date: 1582368028,
+        text: "212"
+      }
+    },
+    chatId: 162884870,
+    __v: 0
+  }
+];
