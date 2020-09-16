@@ -56,7 +56,7 @@ const resultMessage = (props) => {
   const title = `Начало отсчета: ${date}
 ${
   Number.isNaN(lastMessage.message.sum)
-    ? `:exclamation: Сумма не распознана :exclamation:`
+    ? `\u2757\uFE0F Сумма не распознана \u2757\uFE0F` // \u2757\uFE0F - exclamation point
     : `<b>${lastMessage.username} оплатил(а) ${lastMessage.message.sum} руб.</b>\n`
 }
 `;
