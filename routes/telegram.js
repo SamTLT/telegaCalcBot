@@ -22,7 +22,7 @@ const LIMITERS = [
   "---------",
   "---------",
   "-----------",
-  "/limit"
+  "/limit",
 ];
 
 const sendMessage = async (chatId, text) => {
@@ -38,7 +38,7 @@ const summaryMsg = (a, b) => {
 ${b[1]} - ${a[1]} = <b>${b[1] - a[1]} руб.</b>`;
 };
 
-const resultMessage = props => {
+const resultMessage = (props) => {
   const { usersFees, lastMessage, date, isLimiter, error } = props;
 
   if (error) {
@@ -56,12 +56,12 @@ const resultMessage = props => {
   const title = `Начало отсчета: ${date}
 ${
   Number.isNaN(lastMessage.message.sum)
-    ? `Сумма не распознана`
+    ? `:exclamation: Сумма не распознана :exclamation:`
     : `<b>${lastMessage.username} оплатил(а) ${lastMessage.message.sum} руб.</b>\n`
 }
 `;
 
-  const data = usersFees.map(user => {
+  const data = usersFees.map((user) => {
     return `${user[0]}: ${user[1]} руб.`;
   });
 
@@ -82,7 +82,7 @@ ${
   }
 };
 
-const getTelegaDataNew = item => {
+const getTelegaDataNew = (item) => {
   let chatId;
   if (item.message) {
     chatId = item.message.chat.id;
@@ -95,7 +95,7 @@ const getTelegaDataNew = item => {
   return {
     updateId: item.update_id,
     data: item,
-    chatId
+    chatId,
   };
 };
 
@@ -159,5 +159,5 @@ router.post("/" + TOKEN, async (req, res) => {
 module.exports = {
   router,
   LIMITERS,
-  resultMessage
+  resultMessage,
 };
