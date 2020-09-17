@@ -54,8 +54,7 @@ const resultMessage = (props) => {
   }
 
   if (Number.isNaN(lastMessage.message.sum)) {
-    // \u2757\uFE0F - exclamation point
-    return "\u2757\uFE0F Сумма не распознана \u2757\uFE0F";
+    return "Сумма не распознана";
   }
 
   const title = `Начало отсчета: ${date}
