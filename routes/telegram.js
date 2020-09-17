@@ -100,16 +100,16 @@ const getTelegaDataNew = (item) => {
 };
 
 router.get("/", (req, res) => {
-  res.redirect("https://khovalkin.com/");
+  res.redirect("https://github.com/SamTLT/telegaCalcBot");
 });
 
 // show DB on page
-// router.get("/" + TOKEN, async (req, res) => {
-// const telegaDbFull = await TelegaDB.find();
-// const telegaDbFull = await TelegaDB.find({ chatId: -303247171 });
-// const telegaDbFull = await TelegaDB.find({ chatId: 162884870 });
+// router.get("/", async (req, res) => {
+//   const telegaDbFull = await TelegaDB.find();
+//   // const telegaDbFull = await TelegaDB.find({ chatId: -303247171 });
+//   // const telegaDbFull = await TelegaDB.find({ chatId: 162884870 });
 
-// res.status(200).json(telegaDbFull);
+//   res.status(200).json(telegaDbFull);
 // });
 
 router.post("/" + TOKEN, async (req, res) => {

@@ -20,3 +20,9 @@ https://api.telegram.org/bot{my_bot_token}/setWebhook?url={url_to_send_updates_t
 where
 my_bot_token is the token you got from BotFather when you created your Bot
 url_to_send_updates_to is the url of the piece of code you wrote to implement your Bot behavior (must be HTTPS)
+
+Узнать текущий токен можно у @BotFather
+/token - текущий токен
+/revoke - обновить токен
+
+после обновления токена нужно заново устанавливать webHook.
