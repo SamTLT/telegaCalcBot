@@ -23,6 +23,7 @@ const LIMITERS = [
   "---------",
   "-----------",
   "/limit",
+  "/limit@ZaprosCalcBot",
 ];
 
 const sendMessage = async (chatId, text) => {
