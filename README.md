@@ -1,8 +1,5 @@
 # telegaCalcBot
 
-Если соберусь выкладывать в паблик, то нужно будет перезалить проект, т.к. спалил .env =\
-Так же нужно будет поменять все креденшелы.
-
 Для работы необходимо:
 
 Создать файл .env со следующим содержимым (за основу можно взять файл .env.example):
@@ -16,13 +13,14 @@ https://core.telegram.org/bots/api - API бота телеги. Тут мы со
 
 Настройка Telegram Bot webHook:
 https://api.telegram.org/bot{my_bot_token}/setWebhook?url={url_to_send_updates_to}
+my_bot_token - токен, полученный у @BotFather
+url_to_send_updates_to - урл, на который будет ходить телеграмм в случае получения ботом нового сообщения (должен быть HTTPS)
 
-where
-my_bot_token is the token you got from BotFather when you created your Bot
-url_to_send_updates_to is the url of the piece of code you wrote to implement your Bot behavior (must be HTTPS)
-
-Узнать текущий токен можно у @BotFather
-/token - текущий токен
+Узнать текущий токен можно у @BotFather\
+/token - текущий токен\
 /revoke - обновить токен
 
-после обновления токена нужно заново устанавливать webHook.
+После обновления токена нужно заново устанавливать webHook.
+
+Я деплоюсь на Heroku: https://dashboard.heroku.com/ \
+При деплое переменные окружения задаются в settings вашего проекта + там есть довольно удобный функционал автоматической сборки проекта из репозитория гитхаба.
