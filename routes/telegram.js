@@ -7,24 +7,7 @@ const axios = require("axios");
 
 const API_URL = "https://api.telegram.org/bot";
 const TOKEN = process.env.TELEGRAM_TOKEN;
-const LIMITERS = [
-  "————",
-  "—————",
-  "——————",
-  "———————",
-  "————————",
-  "—————————",
-  "----",
-  "-----",
-  "------",
-  "-------",
-  "--------",
-  "---------",
-  "---------",
-  "-----------",
-  "/limit",
-  "/limit@ZaprosCalcBot",
-];
+const LIMITERS = ["/limit", "/limit@ZaprosCalcBot"];
 
 const sendMessage = async (chatId, text) => {
   return axios.get(
