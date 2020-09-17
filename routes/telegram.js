@@ -53,12 +53,13 @@ const resultMessage = (props) => {
     return `Поддерживается максимум 2 пользователя`;
   }
 
+  if (Number.isNaN(lastMessage.message.sum)) {
+    // \u2757\uFE0F - exclamation point
+    return "\u2757\uFE0F Сумма не распознана \u2757\uFE0F";
+  }
+
   const title = `Начало отсчета: ${date}
-${
-  Number.isNaN(lastMessage.message.sum)
-    ? `\u2757\uFE0F Сумма не распознана \u2757\uFE0F` // \u2757\uFE0F - exclamation point
-    : `<b>${lastMessage.username} оплатил(а) ${lastMessage.message.sum} руб.</b>\n`
-}
+${`<b>${lastMessage.username} оплатил(а) ${lastMessage.message.sum} руб.</b>\n`}
 `;
 
   const data = usersFees.map((user) => {
