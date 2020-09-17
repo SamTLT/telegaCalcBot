@@ -100,37 +100,17 @@ const getTelegaDataNew = (item) => {
 };
 
 router.get("/", (req, res) => {
-  // const resultChat = {
-  //   usersFees: [["JohnSmiz", 181]],
-  //   lastMessage: { message: { text: "12", sum: 12 }, username: "JohnSmiz" },
-  //   date: "21:49:12 17.02.2020"
-  // };
-
-  // const resultGroup = {
-  //   usersFees: [
-  //     ["JohnSmiz", 6172],
-  //     ["TatianaKuv", 1]
-  //   ],
-  //   lastMessage: {
-  //     message: { text: "3000 тинек", sum: 3000 },
-  //     username: "JohnSmiz"
-  //   },
-  //   date: "01:52:34 20.02.2020"
-  // };
-
-  // sendMessage(162884870, resultMessage(resultChat));
-  // sendMessage(162884870, resultMessage(resultGroup));
-  res.send("Home Page");
+  res.redirect("https://khovalkin.com/");
 });
 
-router.get("/" + TOKEN, async (req, res) => {
-  // const telegaDbFull = await TelegaDB.find();
-  // const telegaDbFull = await TelegaDB.find({ chatId: -303247171 });
-  // const telegaDbFull = await TelegaDB.find({ chatId: 162884870 });
+// show DB on page
+// router.get("/" + TOKEN, async (req, res) => {
+// const telegaDbFull = await TelegaDB.find();
+// const telegaDbFull = await TelegaDB.find({ chatId: -303247171 });
+// const telegaDbFull = await TelegaDB.find({ chatId: 162884870 });
 
-  // res.status(200).json(telegaDbFull);
-  res.status(200).json("placeholder");
-});
+// res.status(200).json(telegaDbFull);
+// });
 
 router.post("/" + TOKEN, async (req, res) => {
   const result = req.body;

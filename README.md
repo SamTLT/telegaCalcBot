@@ -13,3 +13,10 @@ TELEGRAM_TOKEN=token
 Там мы и создаем токен DB_CONNECTION
 
 https://core.telegram.org/bots/api - API бота телеги. Тут мы создаем бота и получаем токен TELEGRAM_TOKEN
+
+Настройка Telegram Bot webHook:
+https://api.telegram.org/bot{my_bot_token}/setWebhook?url={url_to_send_updates_to}
+
+where
+my_bot_token is the token you got from BotFather when you created your Bot
+url_to_send_updates_to is the url of the piece of code you wrote to implement your Bot behavior (must be HTTPS)
