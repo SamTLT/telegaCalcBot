@@ -44,7 +44,7 @@ https://api.telegram.org/bot{my_bot_token}/setWebhook?url={url_to_send_updates_t
 my_bot_token - tocken provied by @BotFather \
 url_to_send_updates_to - URL telegram should trigger after receiving a new message (HTTPS only)
 
-Working with TELEGRAM_TOKEN
+Working with TELEGRAM_TOKEN \
 You should send message to @BotFather
 ```sh
 /token - to get current tocken
