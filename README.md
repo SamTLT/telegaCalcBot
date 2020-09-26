@@ -28,7 +28,7 @@ As soon you will pay you debt, or you get your money back, you can execute comma
 ```
 Bot starts to count from this moment. (It will not count any records that was added before)
 
-# Installation:
+# Installation
 Create .env file with following content (you can use an .env.example file as a template):
 ```sh
 DB_CONNECTION=token
