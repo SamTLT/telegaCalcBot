@@ -1,6 +1,6 @@
 # telegaCalcBot
 
-TelegaCalcBot is a [Telegram](https://telegram.org/) bot that allows you to calculate debts between two persons
+TelegaCalcBot is a [Telegram](https://telegram.org/) bot that allows you to calculate debts between two person
 
 # How to use it?
 Create a new group, invite second person and bot to the group.
