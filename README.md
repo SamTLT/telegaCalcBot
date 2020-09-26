@@ -3,7 +3,7 @@
 TelegaCalcBot is a [Telegram](https://telegram.org/) bot that allows to calculate how much money do 2 people owe each other (you and another person)
 
 # How to use it?
-Create a new group, invite second person and bot to the group
+Create a new group, invite second person and bot to the group (@ZaprosCalcBot - current version)
 Execute following command:
 ```sh
 /limit
