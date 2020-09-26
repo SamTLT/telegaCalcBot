@@ -20,7 +20,7 @@ For example:
 400 KFC
 ```
 
-The bot will calculate total amount of money each person paid and it will provide total information how much money you owe, or another person owes to you
+The bot will calculate total amount of money each person paid and it will provide total information how much money you owe, or another person owes you
 
 As soon you will pay you debt, or you get your money back, you can execute command:
 ```sh
@@ -39,10 +39,10 @@ https://cloud.mongodb.com/ - To get the DB_CONNECTION tocken
 
 https://core.telegram.org/bots/api - Telegram Bot API. To create a bot and get the TELEGRAM_TOKEN  
 
-Telegram Bot webHook setup
-https://api.telegram.org/bot{my_bot_token}/setWebhook?url={url_to_send_updates_to}
-my_bot_token - tocken provied by @BotFather
-url_to_send_updates_to - URL telegram should trigger after receiving a new message (HTTPS only)
+Telegram Bot webHook setup \
+https://api.telegram.org/bot{my_bot_token}/setWebhook?url={url_to_send_updates_to} \
+my_bot_token - tocken provied by @BotFather \
+url_to_send_updates_to - URL telegram should trigger after receiving a new message (HTTPS only) \
 
 Working with TELEGRAM_TOKEN
 You should send message to @BotFather\
