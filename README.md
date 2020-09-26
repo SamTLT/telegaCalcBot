@@ -35,21 +35,21 @@ DB_CONNECTION=token
 TELEGRAM_TOKEN=token
 ```
 
-https://cloud.mongodb.com/ - To get the DB_CONNECTION tocken
+https://cloud.mongodb.com/ - To get the DB_CONNECTION token
 
 https://core.telegram.org/bots/api - Telegram Bot API. To create a bot and get the TELEGRAM_TOKEN  
 
 Telegram Bot webHook setup \
 https://api.telegram.org/bot{my_bot_token}/setWebhook?url={url_to_send_updates_to} \
-my_bot_token - tocken provied by @BotFather \
+my_bot_token - token provied by @BotFather \
 url_to_send_updates_to - URL telegram should trigger after receiving a new message (HTTPS only)
 
 Working with TELEGRAM_TOKEN \
 You should send message to @BotFather
 ```sh
-/token - to get current tocken
-/revoke - to refresh tocken
+/token - to get current token
+/revoke - to refresh token
 ```
-After refreshing tocken you have to setup a webHook again
+After refreshing token you have to setup a webHook again
 
 https://dashboard.heroku.com/ - I am using heroku for deploiment. It has a really convinent automatic deploiment tool. But don't forget to set environment variables in your project settings
