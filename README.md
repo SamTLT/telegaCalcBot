@@ -1,37 +1,68 @@
 # telegaCalcBot
 
-TelegaCalcBot - это бот для телеграмма, который позволяет вести учет долгов двух людей друг перед другом.
-Принцип довольно прост. Создаете чат, приглашаете туда второго человека и бота. \
-Выполняете команду /limit. С этого момента бот наинает считать. \
-Формат записи долгов: "сумма долга" "примечание" \
-Например: \
-5000 до зарплаты \
-1500 на ремонт
+TelegaCalcBot is a [Telegram](https://telegram.org/) bot that allows to calculate how much money do 2 people owe each other (you and another person)
 
-После того как вы расчитаетесь друг с другом, просто вновь выполните команду /limit
+# How to use it?
+Create a new group, invite second person and bot to the group (@ZaprosCalcBot - current version)
+Execute following command:
+```sh
+/limit
+```
+After that bot starts to work
+A person who pays or gives you money have to add record in a following format: 
+```sh
+"amout" "description"
+```
+For example:
+```sh
+5000 Restaurant
+1500 Glasses
+400 KFC
+```
 
-Разработка: \
-Для запуска необходимо:
+The bot will calculate total amount of money each person paid and it will provide total information how much money you owe, or another person owes you
 
-Создать файл .env со следующим содержимым (за основу можно взять файл .env.example):
+As soon as you will pay all you owe, or you get your money back, one of person can execute command:
+```sh
+/limit
+```
+Bot starts to count from this moment. (It will not count any records that was added before)
+
+# Developing
+Create .env file with following content (you can use an .env.example file as a template):
+```sh
 DB_CONNECTION=token
 TELEGRAM_TOKEN=token
+```
 
-В качестве БД используется монга. Я использую бесплатную версию на https://cloud.mongodb.com/
-Там мы и создаем токен DB_CONNECTION
+https://cloud.mongodb.com/ - To get the DB_CONNECTION token
 
-https://core.telegram.org/bots/api - API бота телеги. Тут мы создаем бота и получаем токен TELEGRAM_TOKEN
+https://core.telegram.org/bots/api - Telegram Bot API. To create a bot and get the TELEGRAM_TOKEN  
 
-Настройка Telegram Bot webHook:
-https://api.telegram.org/bot{my_bot_token}/setWebhook?url={url_to_send_updates_to}
-my_bot_token - токен, полученный у @BotFather
-url_to_send_updates_to - урл, на который будет ходить телеграмм в случае получения ботом нового сообщения (должен быть HTTPS)
+Telegram Bot webHook setup \
+https://api.telegram.org/bot{my_bot_token}/setWebhook?url={url_to_send_updates_to} \
+my_bot_token - token provied by @BotFather \
+url_to_send_updates_to - URL telegram should trigger after receiving a new message (HTTPS only)
 
-Узнать текущий токен можно у @BotFather\
-/token - текущий токен\
-/revoke - обновить токен
+Working with TELEGRAM_TOKEN \
+You should send message to @BotFather
+```sh
+/token - to get current token
+/revoke - to refresh token
+```
+After refreshing token you have to setup a webHook again
 
-После обновления токена нужно заново устанавливать webHook.
+# Start
+```sh
+npm i
+npm start
+```
 
-Я деплоюсь на Heroku: https://dashboard.heroku.com/ \
-При деплое переменные окружения задаются в settings вашего проекта + там есть довольно удобный функционал автоматической сборки проекта из репозитория гитхаба.
+# Test
+```sh
+npm test
+```
+
+# Deploing
+
+https://dashboard.heroku.com/ - I am using heroku for deploiment. It has a really convinent automatic deploiment tool. But don't forget to set environment variables in your project settings
