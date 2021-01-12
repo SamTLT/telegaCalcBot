@@ -1,13 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const axios = require("axios");
 const TelegaDB = require("../models/TelegramDB");
 const { processData } = require("../utilites/process-data");
 
-const axios = require("axios");
-
 const API_URL = "https://api.telegram.org/bot";
-const TOKEN = process.env.TELEGRAM_TOKEN;
 const LIMITERS = ["/limit", "/limit@ZaprosCalcBot"];
+const TOKEN = process.env.TELEGRAM_TOKEN;
 
 const sendMessage = async (chatId, text) => {
   return axios.get(
@@ -95,27 +94,39 @@ router.get("/", (req, res) => {
 
 //   res.status(200).json(telegaDbFull);
 // });
-
+let requestId = 0;
 router.post("/" + TOKEN, async (req, res) => {
+  requestId++;
   const result = req.body;
+  console.log(`[${requestId}] POST Result:`, result);
   if (result) {
     const telegaDataNew = getTelegaDataNew(result);
+    console.log(`[${requestId}] telegaDataNew:`, telegaDataNew);
     const rowsDB = await TelegaDB.find({ updateId: telegaDataNew.updateId });
+    console.log(`[${requestId}] rowsDB:`, rowsDB);
 
     if (rowsDB.length === 0) {
       const telegaDB = new TelegaDB(telegaDataNew);
+      console.log(`[${requestId}] telegaDB:`, rowsDB);
       const savedData = await telegaDB.save();
+      console.log(`[${requestId}] savedData:`, savedData);
       const dataDB = await TelegaDB.find({ chatId: telegaDataNew.chatId });
+      console.log(`[${requestId}] dataDB:`, dataDB);
       const processedData = processData(savedData, dataDB, LIMITERS);
+      console.log(`[${requestId}] processedData:`, processedData);
       const messageToShow = resultMessage(processedData);
-      sendMessage(telegaDataNew.chatId, messageToShow);
+      console.log(`[${requestId}] messageToShow:`, messageToShow);
+      await sendMessage(telegaDataNew.chatId, messageToShow);
       try {
+        console.log(`[${requestId}] Successfully updated:`);
         res.status(200).json("Successfully updated");
       } catch (err) {
+        console.log(`[${requestId}] Error`);
         res.status(502).json(err);
       }
     }
   } else {
+    console.log(`[${requestId}] No updates:`);
     res.status(200).json("No updates");
   }
 });
